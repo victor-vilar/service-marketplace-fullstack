@@ -1,0 +1,10 @@
+- criar a classe de usuarios
+- criar teste unitario dos metodos de converter as autorizadades de string de usuarios.
+- criar serviço para salvar usuarios
+- criar teste para o serviço de salvar usuários
+- criar repositorio de usuários
+- criar teste do repositorio de usuarios
+- criar migration de usuarios
+- criar controller de login
+- criar controller de registro de usuarios
+- criar classe de categorias
