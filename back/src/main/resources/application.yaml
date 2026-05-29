@@ -4,7 +4,6 @@ spring:
   profiles:
     active:
       - dev
-
 jwt:
   secret: ${JWT_SECRET:chave_padra_para_desenvolvimento_local_com_mais_de_32_caracteres}
   issuer: service-marketplace-fullstack
