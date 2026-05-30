@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
-    private List<String> authorities = new ArrayList<>();
+    private Set<String> authorities = new HashSet<>();
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
@@ -106,8 +106,8 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
-        this.authorities = authorities.stream().map(a -> a.toString()).toList();
+    public void setAuthorities(Set<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities.stream().map(a -> a.toString()).collect(Collectors.toSet());
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -129,7 +129,7 @@ public class User implements UserDetails {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        ApiUser apiUser = (ApiUser) o;
+        User apiUser = (User) o;
         return Objects.equals(id, apiUser.id) && Objects.equals(email, apiUser.email);
     }
 
