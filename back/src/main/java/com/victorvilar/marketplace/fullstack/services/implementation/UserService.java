@@ -1,6 +1,6 @@
 package com.victorvilar.marketplace.fullstack.services.implementation;
 
-import com.victorvilar.marketplace.fullstack.UserNotFoundException;
+import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.repositories.UserRepository;
 import com.victorvilar.marketplace.fullstack.services.interfaces.CrudService;

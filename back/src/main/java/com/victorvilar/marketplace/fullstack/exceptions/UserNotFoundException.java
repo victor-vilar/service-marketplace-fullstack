@@ -1,4 +1,4 @@
-package com.victorvilar.marketplace.fullstack;
+package com.victorvilar.marketplace.fullstack.exceptions;
 
 public class UserNotFoundException extends RuntimeException{
 
