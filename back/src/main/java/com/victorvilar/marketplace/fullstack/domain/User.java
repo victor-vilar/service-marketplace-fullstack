@@ -22,16 +22,18 @@ public class User implements UserDetails {
     private String email;
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
-    private List<Job>  services = new ArrayList();
+    @OneToMany(mappedBy = "provider",cascade = CascadeType.REMOVE)
+    private List<Job>  jobs = new ArrayList();
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> contrataoes = new ArrayList();
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders = new ArrayList();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
     private Set<String> authorities = new HashSet<>();
+
+
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
@@ -42,11 +44,34 @@ public class User implements UserDetails {
 
     }
 
-    private String getName(){
+    public void setId(UUID id){
+        if(this.id == null){
+            this.id = id;
+        }
+    }
+
+    public void addJob(Job job){
+        jobs.add(job);
+        job.setUser(this);
+    }
+
+    public void addOrder(Order order){
+        this.orders.add(order);
+    }
+
+    public List<Job> getJobs(){
+        return jobs;
+    }
+
+    public List<Order> getOrders(){
+        return orders;
+    }
+
+    public String getName(){
         return name;
     }
 
-    private String getPhoneNumber(){
+    public String getPhoneNumber(){
         return phoneNumber;
     }
 
