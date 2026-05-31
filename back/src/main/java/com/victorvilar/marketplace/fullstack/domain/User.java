@@ -21,8 +21,13 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String phoneNumber;
-    private List<Job> services;
-    private List<Order> contrataoes;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    private List<Job>  services = new ArrayList();
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> contrataoes = new ArrayList();
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
