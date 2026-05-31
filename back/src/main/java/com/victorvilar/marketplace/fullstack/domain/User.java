@@ -21,8 +21,8 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String phoneNumber;
-//    private List<MarketService> services;
-//    private List<Contratacoes> contrataoes
+    private List<Job> services;
+    private List<Order> contrataoes;
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
