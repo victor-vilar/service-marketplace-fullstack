@@ -17,8 +17,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false)
     private String name;
+    @Column(nullable=false)
     private String password;
+    @Column(nullable=false)
     private String email;
     private String phoneNumber;
 
@@ -182,4 +185,6 @@ public class User implements UserDetails {
                 ", id=" + id +
                 '}';
     }
+
+
 }
