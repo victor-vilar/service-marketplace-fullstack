@@ -51,12 +51,15 @@ public class User implements UserDetails {
     }
 
     public void addJob(Job job){
-        jobs.add(job);
-        job.setUser(this);
+        if(!jobs.contains(job)){
+            jobs.add(job);
+        }
     }
 
     public void addOrder(Order order){
-        this.orders.add(order);
+        if(!orders.contains(order)){
+            orders.add(order);
+        }
     }
 
     public List<Job> getJobs(){
