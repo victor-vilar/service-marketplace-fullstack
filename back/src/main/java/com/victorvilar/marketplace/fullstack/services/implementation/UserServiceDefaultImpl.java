@@ -3,7 +3,6 @@ package com.victorvilar.marketplace.fullstack.services.implementation;
 import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.repositories.UserRepository;
-import com.victorvilar.marketplace.fullstack.services.interfaces.CrudService;
 import com.victorvilar.marketplace.fullstack.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +11,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserServiceDefaultImplementation implements UserService<User> {
+public class UserServiceDefaultImpl implements UserService {
 
     private final UserRepository repository;
     private final String USER_NOT_FOUND = "Usuário não encontrado !";
 
     @Autowired
-    public UserServiceDefaultImplementation(UserRepository repository){
+    public UserServiceDefaultImpl(UserRepository repository){
         this.repository = repository;
     }
 
@@ -52,5 +51,21 @@ public class UserServiceDefaultImplementation implements UserService<User> {
     public void delete(UUID id) {
         User user = repository.findById(id).orElseThrow(() -> {throw new UserNotFoundException(USER_NOT_FOUND);});
         user.setEnabled(false);
+        repository.save(user);
+    }
+
+    @Override
+    public List<User> getAllActive() {
+        return repository.findAllActive();
+    }
+
+    @Override
+    public User getByIdWithJob(UUID id) {
+        return repository.findByIdWithJobs(id);
+    }
+
+    @Override
+    public User getByIdWithOrder(UUID id) {
+        return repository.findByIdWithOrders(id);
     }
 }
