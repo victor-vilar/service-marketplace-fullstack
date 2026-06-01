@@ -3,7 +3,7 @@ spring:
     name: marketplace.fullstack
   profiles:
     active:
-      - test
+      - dev
 jwt:
   secret: ${JWT_SECRET:chave_padra_para_desenvolvimento_local_com_mais_de_32_caracteres}
   issuer: service-marketplace-fullstack
@@ -17,6 +17,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
+        hbm2ddl:
+          auto: validate
   datasource:
     url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE #o h2 funcionará com modo de compatibilidade com o postgres
     driver-class-name: org.h2.Driver
