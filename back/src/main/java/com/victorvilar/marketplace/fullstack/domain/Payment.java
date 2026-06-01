@@ -15,7 +15,7 @@ public class Payment {
     private UUID id;
 
     @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus;
+    private PaymentStatus paymentStatus = PaymentStatus.ABERTA;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

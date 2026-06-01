@@ -28,7 +28,7 @@ public class Order implements Serializable {
     private LocalDate creationDate = LocalDate.now();
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private OrderStatus orderStatus = OrderStatus.ABERTA;
 
     @Column(nullable=false)
     private BigDecimal totalAmount;
@@ -42,12 +42,12 @@ public class Order implements Serializable {
 
     // Usuario que está contratando o serviço
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable=false)
     private User customer;
 
     //Serviço que será feito nessa ordem
     @ManyToOne
-    @JoinColumn(name="job_id")
+    @JoinColumn(name="job_id", nullable=false)
     private Job job;
 
    public Order(){

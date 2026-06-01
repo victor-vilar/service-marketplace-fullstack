@@ -31,14 +31,14 @@ public class Job implements Serializable {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name="category_id",nullable = false)
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
     private User provider;
 
-    @OneToMany
+    @OneToMany(mappedBy = "job")
     private List<Order> orders = new ArrayList<>();
 
     public Job(){

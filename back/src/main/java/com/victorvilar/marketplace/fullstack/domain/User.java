@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "tb_usuarios")
+@Table(name = "tb_users")
 public class User implements UserDetails {
 
     @Id
@@ -21,7 +21,7 @@ public class User implements UserDetails {
     private String name;
     @Column(nullable=false)
     private String password;
-    @Column(nullable=false)
+    @Column(nullable=false, unique=true)
     private String email;
     private String phoneNumber;
 
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "tb_user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
     private Set<String> authorities = new HashSet<>();
 

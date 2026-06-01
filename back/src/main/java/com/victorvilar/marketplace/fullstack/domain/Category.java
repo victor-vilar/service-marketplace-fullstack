@@ -6,14 +6,14 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name="tb_categorias")
+@Table(name="tb_categories")
 public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
     public Category(){

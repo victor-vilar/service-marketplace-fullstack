@@ -7,18 +7,21 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name="tb_ratings")
+@Table(name="tb_reviews")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private LocalDate createdAt;
+    @Column(nullable=false)
+    private LocalDate createdAt = LocalDate.now();
+    @Column(nullable = false)
     private int rating;
     private String commentary;
 
     @Enumerated(EnumType.STRING)
-    private Reviewer reviwer;
+    @Column(nullable=false)
+    private Reviewer reviewer;
 
     @ManyToOne
     private Order order;
