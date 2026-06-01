@@ -22,7 +22,6 @@ public class Order implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(Order.class);
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -34,12 +33,11 @@ public class Order implements Serializable {
     @Column(nullable=false)
     private BigDecimal totalAmount;
 
-    @OneToMany(mappedBy="order_id", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy="order", cascade = {CascadeType.REMOVE})
     private List<Review> reviews = new ArrayList<>();
     private String observation;
 
-    @OneToOne(cascade=CascadeType.ALL,orphanRemoval = true, mappedBy="order_id")
-    @Column(nullable=false)
+    @OneToOne(cascade=CascadeType.ALL,orphanRemoval = true, mappedBy="order")
     private Payment payment;
 
     // Usuario que está contratando o serviço
@@ -102,6 +100,7 @@ public class Order implements Serializable {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+        this.payment.setOrder(this);
     }
 
     public User getCustomer() {
