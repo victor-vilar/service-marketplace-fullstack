@@ -20,4 +20,7 @@ public class Review {
     @Enumerated(EnumType.STRING)
     private Reviewer reviwer;
 
+    @ManyToOne
+    private Order order;
+
 }
