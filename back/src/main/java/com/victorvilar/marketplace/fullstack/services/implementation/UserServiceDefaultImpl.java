@@ -4,6 +4,7 @@ import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.repositories.UserRepository;
 import com.victorvilar.marketplace.fullstack.services.interfaces.CrudService;
+import com.victorvilar.marketplace.fullstack.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserService implements CrudService<User> {
+public class UserServiceDefaultImplementation implements UserService<User> {
 
     private final UserRepository repository;
     private final String USER_NOT_FOUND = "Usuário não encontrado !";
 
     @Autowired
-    public UserService(UserRepository repository){
+    public UserServiceDefaultImplementation(UserRepository repository){
         this.repository = repository;
     }
 
@@ -49,6 +50,7 @@ public class UserService implements CrudService<User> {
 
     @Override
     public void delete(UUID id) {
-        repository.deleteById(id);
+        User user = repository.findById(id).orElseThrow(() -> {throw new UserNotFoundException(USER_NOT_FOUND);});
+        user.setEnabled(false);
     }
 }
