@@ -57,8 +57,11 @@ public class Job implements Serializable {
     }
 
     public void setProvider(User user){
-        this.provider = user;
-        user.addJob(this);
+        if(this.provider == null) {
+            this.provider = user;
+            user.addJob(this);
+        }
+
     }
 
 
@@ -108,23 +111,27 @@ public class Job implements Serializable {
         this.price = price;
     }
 
-
-
-
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Job job = (Job) o;
-        return Objects.equals(id, job.id);
+        return Objects.equals(id, job.id) && Objects.equals(title, job.title) && Objects.equals(description, job.description) && Objects.equals(price, job.price) && Objects.equals(provider, job.provider);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "title='" + title + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
