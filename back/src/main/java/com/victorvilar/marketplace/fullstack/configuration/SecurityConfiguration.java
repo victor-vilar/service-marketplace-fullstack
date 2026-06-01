@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.List;
 
+import static org.springframework.boot.security.autoconfigure.web.servlet.PathRequest.toH2Console;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -27,11 +29,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
 
         return http
+                .csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()))
                 .authorizeHttpRequests(req ->{
-                    req.requestMatchers("/api/login", "/api/register").permitAll();
+                    req.requestMatchers("/api/login", "/api/register" ,"/h2-console/**").permitAll();
                     req.anyRequest().authenticated();
-
                 })
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 //.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .build();
