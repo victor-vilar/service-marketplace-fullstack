@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name="tb_orders")
+@Table(name="tb_payments")
 public class Payment {
 
     @Id
@@ -23,4 +23,36 @@ public class Payment {
     @OneToOne
     @JoinColumn(name="order_id")
     private Order order;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }
