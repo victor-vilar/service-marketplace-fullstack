@@ -19,16 +19,19 @@ class UserMapperTest {
     User user;
 
     @Test
-    void deveCopiarOsDadosDoDtoParaAEntity(){
+    void deveCopiarOsDadosDoDtoParaAEntitySemAlterarOID(){
 
         dto = new UserDTO(UUID.randomUUID(),"Astolfo","astolfo@gmail.com","123456789");
         user = new User();
+        user.setId(UUID.randomUUID());
         user.setName("Ipsum");
         user.setEmail("ipsum@hotmail.com");
         user.setPhoneNumber("987654321");
 
         mapper.copyData(dto,user);
 
+        
+        Assertions.assertNotEquals(user.getId(),dto.id());
         Assertions.assertEquals(user.getName(),dto.name());
         Assertions.assertEquals(user.getEmail(),dto.email());
         Assertions.assertEquals(user.getPhoneNumber(),dto.phoneNumber());
@@ -53,7 +56,7 @@ class UserMapperTest {
 
         dto = new UserDTO(UUID.randomUUID(),"Astolfo","astolfo@gmail.com","123456789");
         user = mapper.toEntity(dto);
-        
+
         Assertions.assertEquals(user.getId(),dto.id());
         Assertions.assertEquals(user.getName(),dto.name());
         Assertions.assertEquals(user.getEmail(),dto.email());
