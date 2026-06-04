@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 
-@Mapper(componentModel="spring")
+@Mapper(componentModel="spring", uses={JobMapper.class, OrderMapper.class})
 public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
