@@ -20,6 +20,10 @@ public class Category implements Serializable {
 
     }
 
+    public Category(String name){
+        this.name = name;
+    }
+
     public UUID getId() {
         return id;
     }
