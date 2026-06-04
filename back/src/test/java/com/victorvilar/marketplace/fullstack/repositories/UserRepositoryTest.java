@@ -1,9 +1,6 @@
 package com.victorvilar.marketplace.fullstack.repositories;
 
-import com.victorvilar.marketplace.fullstack.domain.Job;
-import com.victorvilar.marketplace.fullstack.domain.Order;
-import com.victorvilar.marketplace.fullstack.domain.Payment;
-import com.victorvilar.marketplace.fullstack.domain.User;
+import com.victorvilar.marketplace.fullstack.domain.*;
 import com.victorvilar.marketplace.fullstack.enums.OrderStatus;
 import com.victorvilar.marketplace.fullstack.enums.PaymentMethod;
 import com.victorvilar.marketplace.fullstack.enums.PaymentStatus;
@@ -57,17 +54,17 @@ class UserRepositoryTest {
         user1.setEnabled(true);
         user1.setName("Lorem");
         user1.setPassword("sdff");
-        user1.setEmail("lorem@gmail.com");
+        user1.setEmail("lorem1@gmail.com");
 
         user2.setEnabled(true);
         user2.setName("Ipsum");
         user2.setPassword("sdff");
-        user2.setEmail("lorem@gmail.com");
+        user2.setEmail("ipsum@gmail.com");
 
         user3.setEnabled(true);
         user3.setName("LorIp");
         user3.setPassword("sdff");
-        user3.setEmail("lorem@gmail.com");
+        user3.setEmail("lorem3@gmail.com");
     }
 
     public void setJobs(){
@@ -171,6 +168,15 @@ class UserRepositoryTest {
         job1.setProvider(user1);
         job2.setProvider(user1);
 
+        Category cat1 = new Category("Mecanico");
+        Category cat2 = new Category("Padeiro");
+
+        cat1 = manager.persist(cat1);
+        cat2 = manager.persist(cat2);
+
+        job1.setCategory(cat1);
+        job2.setCategory(cat2);
+
         manager.persist(job1);
         manager.persist(job2);
 
@@ -198,9 +204,17 @@ class UserRepositoryTest {
         job1.setProvider(user1);
         job2.setProvider(user2);
 
+        Category cat1 = new Category("Mecanico");
+        Category cat2 = new Category("Padeiro");
+
+        cat1 = manager.persist(cat1);
+        cat2 = manager.persist(cat2);
+
+        job1.setCategory(cat1);
+        job2.setCategory(cat2);
+
         job1 = manager.persist(job1);
         job2 = manager.persist(job2);
-
 
         order1.setJob(job1);
         order1.setCustomer(user3);
