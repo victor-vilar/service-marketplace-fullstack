@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record JobDTO(UUID id, String title, String description, BigDecimal price, String category, UUID provider , List<OrderDTO> orders) {
+public record JobDTO(String id, String title, String description, BigDecimal price, String category, String provider , List<OrderDTO> orders) {
 
     public static Builder builder(){
         return new Builder();
@@ -15,15 +15,15 @@ public record JobDTO(UUID id, String title, String description, BigDecimal price
 
     public static class Builder{
 
-        private UUID id = null;
+        private String id = null;
         private String title;
         private String description;
         private BigDecimal price = BigDecimal.ZERO;
         private String category = "";
-        private UUID provider;
+        private String provider;
         private List<OrderDTO> orders = new ArrayList<>();
 
-        public Builder id(UUID id){
+        public Builder id(String id){
             this.id = id;
             return this;
         }
@@ -43,7 +43,7 @@ public record JobDTO(UUID id, String title, String description, BigDecimal price
             return this;
         }
 
-        public Builder provider(UUID provider){
+        public Builder provider(String provider){
             this.provider = provider;
             return this;
         }

@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record UserDTO(UUID id, String name, String email, String phoneNumber, List<JobDTO> jobs,List<OrderDTO> orders) {
+public record UserDTO(String id, String name, String email, String phoneNumber, List<JobDTO> jobs,List<OrderDTO> orders) {
 
     public static Builder builder(){
         return new Builder();
     }
 
     public static class Builder{
-        private UUID id = null;
+        private String id = null;
         private String name;
         private String email;
         private String phoneNumber = "";
         private List<JobDTO> jobs = new ArrayList<>();
         private List<OrderDTO> orders = new ArrayList<>();
 
-        public Builder id(UUID id){
+        public Builder id(String id){
             this.id = id;
             return this;
         }

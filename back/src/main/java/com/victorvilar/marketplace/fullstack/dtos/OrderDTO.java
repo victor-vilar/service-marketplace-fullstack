@@ -11,24 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record OrderDTO (UUID id, LocalDate creationDate, String orderStatus, BigDecimal totalAmount, List<Review> reviews, String observation, Payment payment, UUID customer, UUID job){
+public record OrderDTO (String id, LocalDate creationDate, String orderStatus, BigDecimal totalAmount, List<Review> reviews, String observation, PaymentDTO payment, String customer, String job){
 
     public static JobDTO.Builder builder(){
         return new JobDTO.Builder();
     }
 
     public static class Builder{
-        private UUID id = null;
+        private String id = null;
         private LocalDate creationDate;
         private String orderStatus = "";
         private BigDecimal totalAmount = BigDecimal.ZERO;
         private List<Review> reviews = new ArrayList();
         private String observation = "";
-        private Payment payment = null;
-        private UUID customer;
-        private UUID job;
+        private PaymentDTO payment = null;
+        private String customer;
+        private String job;
 
-        public Builder id(UUID id){
+        public Builder id(String id){
             this.id = id;
             return this;
         }
@@ -58,17 +58,17 @@ public record OrderDTO (UUID id, LocalDate creationDate, String orderStatus, Big
             return this;
         }
 
-        public Builder payment(Payment payment){
+        public Builder payment(PaymentDTO payment){
             this.payment = payment;
             return this;
         }
 
-        public Builder customer(UUID customer){
+        public Builder customer(String customer){
             this.customer = customer;
             return this;
         }
 
-        public Builder job(UUID job){
+        public Builder job(String job){
             this.job = job;
             return this;
         }

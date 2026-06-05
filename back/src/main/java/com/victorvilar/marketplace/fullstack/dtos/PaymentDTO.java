@@ -33,7 +33,7 @@ public record PaymentDTO(String id, String PaymentStatus, String paymentMethod, 
             this.order = order;
             return this;
         }
-        
+
         public PaymentDTO build(){
             return new PaymentDTO(id,paymentStatus,paymentMethod,order);
         }
