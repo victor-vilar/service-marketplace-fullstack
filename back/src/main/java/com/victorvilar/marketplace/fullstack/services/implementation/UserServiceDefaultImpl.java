@@ -1,6 +1,7 @@
 package com.victorvilar.marketplace.fullstack.services.implementation;
 
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
+import com.victorvilar.marketplace.fullstack.enums.TipoUsuario;
 import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.mappers.UserMapper;
@@ -37,6 +38,10 @@ public class UserServiceDefaultImpl implements UserService {
         return mapper.toDto(user);
     }
 
+    private User getByIdNoMap(UUID id){
+        return repository.findById(id).orElseThrow(() -> {throw new UserNotFoundException(USER_NOT_FOUND);});
+    }
+
     @Override
     public UserDTO save(UserDTO entity) {
 
@@ -51,14 +56,14 @@ public class UserServiceDefaultImpl implements UserService {
 
     @Override
     public UserDTO update(UserDTO entity) {
-        User user = repository.findById(entity.id()).orElseThrow(() -> {throw new UserNotFoundException(USER_NOT_FOUND);});
+        User user = getByIdNoMap(UUID.fromString(entity.id()));
         mapper.copyData(entity,user);
         return mapper.toDto(repository.save(user));
     }
 
     @Override
     public void delete(UUID id) {
-        User user = repository.findById(id).orElseThrow(() -> {throw new UserNotFoundException(USER_NOT_FOUND);});
+        User user = getByIdNoMap(id);
         user.setEnabled(false);
         repository.save(user);
     }
@@ -76,5 +81,19 @@ public class UserServiceDefaultImpl implements UserService {
     @Override
     public UserDTO getByIdWithOrder(UUID id) {
         return mapper.toDto(repository.findByIdWithOrders(id));
+    }
+
+    @Override
+    public UserDTO addRole(UUID id , TipoUsuario tipo) {
+        User user = getByIdNoMap(id);
+        user.addRole(tipo);
+        return mapper.toDto(user);
+    }
+
+    @Override
+    public UserDTO removeRole(UUID id ,TipoUsuario tipo){
+        User user = getByIdNoMap(id);
+        user.addRole(tipo);
+        return mapper.toDto(user);
     }
 }

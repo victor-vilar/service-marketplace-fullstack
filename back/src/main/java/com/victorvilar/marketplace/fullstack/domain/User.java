@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.domain;
 
+import com.victorvilar.marketplace.fullstack.enums.TipoUsuario;
 import jakarta.persistence.*;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -144,6 +145,16 @@ public class User implements UserDetails {
 
     public void setAuthorities(Set<SimpleGrantedAuthority> authorities) {
         this.authorities = authorities.stream().map(a -> a.toString()).collect(Collectors.toSet());
+    }
+
+    public void addRole(TipoUsuario tipo){
+        this.authorities.add(tipo.toString());
+    }
+
+    public void removeRole(TipoUsuario tipo){
+        if(this.authorities.contains(tipo.toString())){
+            this.authorities.remove(tipo.toString());
+        }
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {

@@ -1,8 +1,7 @@
 package com.victorvilar.marketplace.fullstack.services.interfaces;
 
-import com.victorvilar.marketplace.fullstack.domain.Job;
-import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
+import com.victorvilar.marketplace.fullstack.enums.TipoUsuario;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,4 +16,6 @@ public interface UserService{
     public List<UserDTO> getAllActive();
     public UserDTO getByIdWithJob(UUID id);
     public UserDTO getByIdWithOrder(UUID id);
+    public UserDTO addRole(UUID id , TipoUsuario tipo);
+    public UserDTO removeRole(UUID id ,TipoUsuario tipo);
 }
