@@ -11,7 +11,101 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record OrderDTO (String id, LocalDate creationDate, String orderStatus, BigDecimal totalAmount, List<Review> reviews, String observation, PaymentDTO payment, String customer, String job){
+public class OrderDTO {
+
+    private String id = null;
+    private LocalDate creationDate;
+    private String orderStatus = "";
+    private BigDecimal totalAmount = BigDecimal.ZERO;
+    private List<Review> reviews = new ArrayList();
+    private String observation = "";
+    private PaymentDTO payment = null;
+    private String customer;
+    private String job;
+
+    private OrderDTO(String id, LocalDate creationDate, String orderStatus, BigDecimal totalAmount, List<Review> reviews, String observation, PaymentDTO payment, String customer, String job){
+       this.id = id;
+       this.creationDate = creationDate;
+       this.orderStatus = orderStatus;
+       this.totalAmount = totalAmount;
+       this.reviews = reviews;
+       this.observation = observation;
+       this.payment = payment;
+       this.customer = customer;
+       this.job = job;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+
+    public PaymentDTO getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentDTO payment) {
+        this.payment = payment;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
 
     public static JobDTO.Builder builder(){
         return new JobDTO.Builder();

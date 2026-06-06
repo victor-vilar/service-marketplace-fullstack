@@ -2,7 +2,53 @@ package com.victorvilar.marketplace.fullstack.dtos;
 
 import java.util.UUID;
 
-public record PaymentDTO(String id, String PaymentStatus, String paymentMethod, String order) {
+public class PaymentDTO{
+
+    private String id;
+    private String paymentStatus;
+    private String paymentMethod;
+    private String order;
+
+
+    private PaymentDTO(String id, String paymentStatus, String paymentMethod, String order){
+        this.id = id;
+        this.paymentStatus = paymentStatus;
+        this.paymentMethod = paymentMethod;
+        this.order = order;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
     public static Builder builder(){
         return new Builder();
