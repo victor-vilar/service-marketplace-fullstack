@@ -4,9 +4,12 @@ import com.victorvilar.marketplace.fullstack.filters.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,14 +32,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
 
         return http
-                .csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req ->{
                     req.requestMatchers("/api/login", "/api/register" ,"/h2-console/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                //.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .build();
 
     }
@@ -49,8 +52,12 @@ public class SecurityConfiguration {
     @Profile("dev")
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder){
-        User admin = new User("admin",encoder.encode("pass"), List.of(new SimpleGrantedAuthority("user")));
+        User admin = new User("admin",encoder.encode("pass"), List.of(new SimpleGrantedAuthority("admin")));
         return new InMemoryUserDetailsManager(admin);
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }
