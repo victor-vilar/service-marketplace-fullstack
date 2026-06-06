@@ -1,10 +1,12 @@
 package com.victorvilar.marketplace.fullstack.dtos;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record UserDTO(String id, String name, String email, String phoneNumber, List<JobDTO> jobs,List<OrderDTO> orders) {
+public record UserDTO(String id, @NotNull String name, @NotNull String email,String password, String phoneNumber, List<JobDTO> jobs, List<OrderDTO> orders) {
 
     public static Builder builder(){
         return new Builder();
@@ -14,6 +16,7 @@ public record UserDTO(String id, String name, String email, String phoneNumber, 
         private String id = null;
         private String name;
         private String email;
+        private String password;
         private String phoneNumber = "";
         private List<JobDTO> jobs = new ArrayList<>();
         private List<OrderDTO> orders = new ArrayList<>();
@@ -30,6 +33,11 @@ public record UserDTO(String id, String name, String email, String phoneNumber, 
 
         public Builder email(String email){
             this.email = email;
+            return this;
+        }
+
+        public Builder password(String password){
+            this.password = password;
             return this;
         }
 
@@ -54,7 +62,7 @@ public record UserDTO(String id, String name, String email, String phoneNumber, 
                 throw new IllegalStateException("Um usuario deve possuir um nome, email e id");
             }
 
-            return new UserDTO(id,name,email,phoneNumber,jobs,orders);
+            return new UserDTO(id,name,email,password,phoneNumber,jobs,orders);
 
         }
 
