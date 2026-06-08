@@ -17,7 +17,11 @@ public class JobDTO{
     private String provider;
     private List<OrderDTO> orders = new ArrayList<>();
 
-    private JobDTO(String id, String title, String description, BigDecimal price, String category, String provider , List<OrderDTO> orders){
+    public JobDTO(){
+
+    }
+
+    public JobDTO(String id, String title, String description, BigDecimal price, String category, String provider , List<OrderDTO> orders){
         this.id = id;
         this.title = title;
         this.description = description;

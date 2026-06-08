@@ -23,7 +23,11 @@ public class OrderDTO {
     private String customer;
     private String job;
 
-    private OrderDTO(String id, LocalDate creationDate, String orderStatus, BigDecimal totalAmount, List<Review> reviews, String observation, PaymentDTO payment, String customer, String job){
+    public OrderDTO(){
+
+    }
+
+    public OrderDTO(String id, LocalDate creationDate, String orderStatus, BigDecimal totalAmount, List<Review> reviews, String observation, PaymentDTO payment, String customer, String job){
        this.id = id;
        this.creationDate = creationDate;
        this.orderStatus = orderStatus;
