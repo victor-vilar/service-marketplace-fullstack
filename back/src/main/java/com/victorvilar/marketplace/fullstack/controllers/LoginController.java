@@ -35,8 +35,11 @@ public class LoginController {
         //se não encontrar o spring lança erro automaticamente
         var auth = new UsernamePasswordAuthenticationToken(login.username(),login.password());
 
+        //Tenta realizar o login com os dados passados
+        Authentication authentication = authManager.authenticate(auth);
+
         //cria o token
-        var jwt = jwtService.generateKey((String) auth.getPrincipal());
+        var jwt = jwtService.generateKey(authentication.getPrincipal().toString());
 
         //retorna token no body
         return ResponseEntity.ok().body(jwt);
