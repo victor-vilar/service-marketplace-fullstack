@@ -45,7 +45,7 @@ public class UserServiceDefaultImpl implements UserService {
     @Override
     public UserDTO save(UserDTO entity) {
 
-        if(entity.id() !=null){
+        if(entity.getId() !=null){
             return update(entity);
         }
 
@@ -56,7 +56,7 @@ public class UserServiceDefaultImpl implements UserService {
 
     @Override
     public UserDTO update(UserDTO entity) {
-        User user = getByIdNoMap(UUID.fromString(entity.id()));
+        User user = getByIdNoMap(UUID.fromString(entity.getId()));
         mapper.copyData(entity,user);
         return mapper.toDto(repository.save(user));
     }
