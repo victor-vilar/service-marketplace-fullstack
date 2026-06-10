@@ -45,7 +45,7 @@ public class User implements UserDetails {
 
 
     public User() {
-
+        addRole(TipoUsuario.USUARIO);
     }
 
     public void setId(UUID id){
