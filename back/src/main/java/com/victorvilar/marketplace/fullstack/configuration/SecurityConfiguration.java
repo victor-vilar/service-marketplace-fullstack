@@ -49,12 +49,6 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Profile("dev")
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-        User admin = new User("admin",encoder.encode("pass"), List.of(new SimpleGrantedAuthority("admin")));
-        return new InMemoryUserDetailsManager(admin);
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
