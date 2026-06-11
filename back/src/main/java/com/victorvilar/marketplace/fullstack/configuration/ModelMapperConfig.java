@@ -1,8 +1,10 @@
 package com.victorvilar.marketplace.fullstack.configuration;
 
 import com.victorvilar.marketplace.fullstack.domain.Job;
+import com.victorvilar.marketplace.fullstack.domain.Order;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.JobDTO;
+import com.victorvilar.marketplace.fullstack.dtos.OrderDTO;
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,13 @@ public class ModelMapperConfig {
         mapper
                 .typeMap(Job.class,JobDTO.class)
                 .addMapping(src-> src.getProvider().getId(),JobDTO::setProvider);
+
+        mapper
+                .typeMap(Order.class, OrderDTO.class)
+                .addMappings(src ->{
+                    src.map(maper -> maper.getCustomer().getId(),OrderDTO::setCustomer);
+                    src.map(maper -> maper.getJob().getId(),OrderDTO::setJob);
+                });
 
         mapper
                 .typeMap(User.class,UserDTO.class)
