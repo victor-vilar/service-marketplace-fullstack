@@ -13,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
@@ -38,14 +41,23 @@ public class LoginController {
         //Tenta realizar o login com os dados passados
         Authentication authentication = authManager.authenticate(auth);
 
+        //Pega o usuario e cria os claims que vou querer adicionar ao jwt
+        User user = (User) authentication.getPrincipal();
+        Map<String, String> claims = new HashMap<>();
+        addClaims(claims, user);
+
         //cria o token
-        var jwt = jwtService.generateKey(authentication.getPrincipal().toString());
+        var jwt = jwtService.generateKey(user.getUsername(),"dados",claims);
 
         //retorna token no body
         return ResponseEntity.ok().body(jwt);
 
+    }
 
-
+    private void addClaims(Map<String, String> claims, User user){
+        claims.put("Autorithies", user.getAuthorities().toString());
+        claims.put("nome",user.getName());
+        claims.put("phone",user.getPhoneNumber());
     }
 
 
