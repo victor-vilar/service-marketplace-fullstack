@@ -54,6 +54,10 @@ public class Order implements Serializable {
 
    }
 
+   public UUID getId(){
+       return id;
+   }
+
     public LocalDate getCreationDate() {
         return creationDate;
     }
