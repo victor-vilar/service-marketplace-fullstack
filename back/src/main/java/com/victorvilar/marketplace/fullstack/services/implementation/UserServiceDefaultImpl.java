@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -75,12 +76,20 @@ public class UserServiceDefaultImpl implements UserService {
 
     @Override
     public UserDTO getByIdWithJob(UUID id) {
-        return mapper.toDto(repository.findByIdWithJobs(id));
+        Optional<User> user = repository.findByIdWithJobs(id);
+        if(!user.isPresent()){
+            throw new UserNotFoundException(USER_NOT_FOUND);
+        }
+        return mapper.toDto(user.get());
     }
 
     @Override
     public UserDTO getByIdWithOrder(UUID id) {
-        return mapper.toDto(repository.findByIdWithOrders(id));
+        Optional<User> user = repository.findByIdWithOrders(id);
+        if(!user.isPresent()){
+            throw new UserNotFoundException(USER_NOT_FOUND);
+        }
+        return mapper.toDto(user.get());
     }
 
     @Override

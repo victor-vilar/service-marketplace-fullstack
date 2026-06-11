@@ -15,10 +15,10 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     public List<User> findAllActive();
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.jobs WHERE u.id = :id")
-    public User findByIdWithJobs(@Param("id") UUID id);
+    public Optional<User> findByIdWithJobs(@Param("id") UUID id);
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.orders WHERE u.id = :id")
-    public User findByIdWithOrders(@Param("id") UUID id);
+    public Optional<User> findByIdWithOrders(@Param("id") UUID id);
 
     public Optional<User> findByEmail(String email);
 }
