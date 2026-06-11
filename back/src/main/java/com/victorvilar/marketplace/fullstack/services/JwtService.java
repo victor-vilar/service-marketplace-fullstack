@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Map;
 
 @Service
 public class JwtService {
@@ -26,7 +27,8 @@ public class JwtService {
             return JWT.create()
                     .withIssuer(tokenIssuer) // quem emitiu o token
                     .withSubject(identification) // dono do token
-                    .withExpiresAt(generateExpiration()) //tempo de validade
+                    .withExpiresAt(generateExpiration())
+                    //tempo de validade
                     .sign(algorithm); // assina com achave secreta
 
         }catch(JWTCreationException e){
@@ -34,6 +36,37 @@ public class JwtService {
         }
 
     }
+
+    public String generateKey(String identification, String claimName, String claim){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secretKey);
+            return JWT.create()
+                    .withIssuer(tokenIssuer) // quem emitiu o token
+                    .withSubject(identification) // dono do token
+                    .withExpiresAt(generateExpiration())
+                    .withClaim(claimName,claim)
+                    .sign(algorithm); // assina com achave secreta
+
+        }catch(JWTCreationException e){
+            throw new RuntimeException("Erro ao gerar Token");
+        }
+    }
+
+    public String generateKey(String identification, String claimName, Map<String,String> claims){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secretKey);
+            return JWT.create()
+                    .withIssuer(tokenIssuer) // quem emitiu o token
+                    .withSubject(identification) // dono do token
+                    .withExpiresAt(generateExpiration())
+                    .withClaim(claimName,claims)
+                    .sign(algorithm);
+
+        }catch(JWTCreationException e){
+            throw new RuntimeException("Erro ao gerar Token");
+        }
+    }
+
 
     public String verifyKey(String token){
 
