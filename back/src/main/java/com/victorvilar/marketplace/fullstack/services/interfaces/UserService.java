@@ -14,8 +14,8 @@ public interface UserService{
     public UserDTO update(UserDTO entity);
     public void delete(UUID id);
     public List<UserDTO> getAllActive();
-    public UserDTO getByIdWithJob(UUID id);
-    public UserDTO getByIdWithOrder(UUID id);
+    public UserDTO getByIdWithJobs(UUID id);
+    public UserDTO getByIdWithOrders(UUID id);
     public UserDTO addRole(UUID id , TipoUsuario tipo);
     public UserDTO removeRole(UUID id ,TipoUsuario tipo);
 }

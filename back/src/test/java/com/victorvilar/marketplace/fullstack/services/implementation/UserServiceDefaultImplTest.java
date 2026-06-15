@@ -1,5 +1,7 @@
 package com.victorvilar.marketplace.fullstack.services.implementation;
 
+import com.victorvilar.marketplace.fullstack.domain.Category;
+import com.victorvilar.marketplace.fullstack.domain.Job;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
@@ -199,10 +201,23 @@ class UserServiceDefaultImplTest {
     }
 
     @Test
-    void getByIdWithJob() {
+    void getByIdWithJobs() {
+        Job job1 = new Job();
+        job1.setProvider(user1);
+        job1.setCategory(new Category("LIMPEZA"));
+        job1.setTitle("Limpeza");
+
+        Job job2 = new Job();
+        job2.setProvider(user1);
+        job2.setCategory(new Category("MANUTENÇÃO"));
+        job2.setTitle("Manutenção");
+
+        when(repository.findByIdWithJobs(any(UUID.class))).thenReturn(Optional.of(user1));
+        UserDTO dtos = service.getByIdWithJobs(UUID.randomUUID()) ;
+
     }
 
     @Test
-    void getByIdWithOrder() {
+    void getByIdWithOrders() {
     }
 }

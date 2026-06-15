@@ -75,7 +75,7 @@ public class UserServiceDefaultImpl implements UserService {
     }
 
     @Override
-    public UserDTO getByIdWithJob(UUID id) {
+    public UserDTO getByIdWithJobs(UUID id) {
         Optional<User> user = repository.findByIdWithJobs(id);
         if(!user.isPresent()){
             throw new UserNotFoundException(USER_NOT_FOUND);
@@ -84,7 +84,7 @@ public class UserServiceDefaultImpl implements UserService {
     }
 
     @Override
-    public UserDTO getByIdWithOrder(UUID id) {
+    public UserDTO getByIdWithOrders(UUID id) {
         Optional<User> user = repository.findByIdWithOrders(id);
         if(!user.isPresent()){
             throw new UserNotFoundException(USER_NOT_FOUND);
