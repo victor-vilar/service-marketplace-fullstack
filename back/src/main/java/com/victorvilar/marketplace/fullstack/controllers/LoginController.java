@@ -55,7 +55,7 @@ public class LoginController {
     }
 
     private void addClaims(Map<String, String> claims, User user){
-        claims.put("Autorithies", user.getAuthorities().toString());
+        claims.put("Authorities", user.getAuthorities().toString());
         claims.put("nome",user.getName());
         claims.put("phone",user.getPhoneNumber());
     }
