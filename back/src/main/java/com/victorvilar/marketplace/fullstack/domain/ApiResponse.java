@@ -5,14 +5,13 @@ import java.util.List;
 
 public class ApiResponse<T> {
 
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
     private T response;
     private boolean sucess;
     private String message;
     private List<String> errors;
 
-    public ApiResponse(LocalDate date, T object,boolean sucess,String message, List<String> errors){
-        this.date = date;
+    public ApiResponse(T object,boolean sucess,String message, List<String> errors){
         this.response = object;
         this.sucess = sucess;
         this.message = message;
@@ -26,5 +25,7 @@ public class ApiResponse<T> {
     public T getResponse(){
         return response;
     }
+
+
 
 }
