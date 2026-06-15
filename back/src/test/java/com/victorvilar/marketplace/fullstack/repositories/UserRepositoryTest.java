@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Profile;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -181,13 +182,13 @@ class UserRepositoryTest {
         manager.persist(job2);
 
 
-        User user1ComJob = repository.findByIdWithJobs(user1.getId());
+        Optional<User> user1ComJob = repository.findByIdWithJobs(user1.getId());
         Assertions.assertEquals(2,user1.getJobs().size());
 
-        User user2ComJob = repository.findByIdWithJobs(user2.getId());
+        Optional<User> user2ComJob = repository.findByIdWithJobs(user2.getId());
         Assertions.assertEquals(0,user2.getJobs().size());
 
-        User user3ComJob = repository.findByIdWithJobs(user3.getId());
+        Optional<User> user3ComJob = repository.findByIdWithJobs(user3.getId());
         Assertions.assertEquals(0,user3.getJobs().size());
 
 
@@ -233,14 +234,14 @@ class UserRepositoryTest {
 
         manager.flush();
 
-        User user3ComOrders = repository.findByIdWithOrders(user3.getId());
-        User user2ComOrders = repository.findByIdWithOrders(user2.getId());
+        Optional<User> user3ComOrders = repository.findByIdWithOrders(user3.getId());
+        Optional<User> user2ComOrders = repository.findByIdWithOrders(user2.getId());
 
-        assertEquals(user3ComOrders.getOrders().size(),1);
-        assertEquals(user2ComOrders.getOrders().size(),1);
+        assertEquals(user3ComOrders.get().getOrders().size(),1);
+        assertEquals(user2ComOrders.get().getOrders().size(),1);
 
-        assertEquals(user3ComOrders.getOrders().get(0).getJob(),job1);
-        assertEquals(user2ComOrders.getOrders().get(0).getJob(),job1);
+        assertEquals(user3ComOrders.get().getOrders().get(0).getJob(),job1);
+        assertEquals(user2ComOrders.get().getOrders().get(0).getJob(),job1);
 
 
     }
