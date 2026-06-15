@@ -39,7 +39,7 @@ public class RegisterController {
                 .build();
 
         user = this.service.save(user);
-        ApiResponse<UserDTO> response = new ApiResponse<>(LocalDate.now(),user,true,SUCCESS_MESSAGE,null);
+        ApiResponse<UserDTO> response = ApiResponse.success(SUCCESS_MESSAGE).build(user);
         return ResponseEntity.ok(response);
     }
 
