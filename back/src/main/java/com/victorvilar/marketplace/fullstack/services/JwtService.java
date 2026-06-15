@@ -4,13 +4,22 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.victorvilar.marketplace.fullstack.domain.JwtClaims;
+import com.victorvilar.marketplace.fullstack.domain.User;
+import com.victorvilar.marketplace.fullstack.enums.TipoUsuario;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class JwtService {
@@ -68,19 +77,37 @@ public class JwtService {
     }
 
 
-    public String verifyKey(String token){
+    public User verifyKey(String token){
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
-            return JWT.require(algorithm)
+            DecodedJWT jwt = JWT.require(algorithm)
                     .withIssuer(tokenIssuer)
                     .build()
-                    .verify(token)
-                    .getSubject();
+                    .verify(token);
+            return getSubject(jwt);
+
         } catch (JWTVerificationException exception){
-            return "";
+            return null;
         }
     }
+
+    public User getSubject(DecodedJWT jwt){
+        User user = new User();
+        Map<String, Object> dados = jwt.getClaim("dados").asMap();
+
+        user.setName((String) dados.get(JwtClaims.NAME));
+        user.setPhoneNumber((String) dados.get(JwtClaims.PHONE));
+
+        String authorities = (String)dados.get(JwtClaims.AUTHORITIES);
+        String autho = authorities.replaceAll("\\[|\\]","").replace(" ","");
+        String[] arr = autho.split(",");
+
+        Arrays.asList(arr).stream().forEach(a -> user.addRole(TipoUsuario.valueOf(a)));
+
+        return user;
+    }
+
 
     public boolean isTokenExpired(String token){
         return false;
