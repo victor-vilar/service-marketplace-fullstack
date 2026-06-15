@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.filters;
 
+import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -31,9 +33,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = findToken(request);
         if(token != null){
-           String subject = jwtService.verifyKey(token);
-           if(!subject.equals("")){
-               Authentication authentication = new UsernamePasswordAuthenticationToken(subject,null);
+           User subject = jwtService.verifyKey(token);
+           if(subject != null){
+               Authentication authentication = new UsernamePasswordAuthenticationToken(subject.getName(),null,new ArrayList<>());
                SecurityContextHolder.getContext().setAuthentication(authentication);
            }
         }
