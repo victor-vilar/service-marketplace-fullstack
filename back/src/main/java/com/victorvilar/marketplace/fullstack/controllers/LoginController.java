@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.controllers;
 
+import com.victorvilar.marketplace.fullstack.domain.JwtClaims;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.LoginDTO;
 import com.victorvilar.marketplace.fullstack.services.JwtService;
@@ -55,9 +56,9 @@ public class LoginController {
     }
 
     private void addClaims(Map<String, String> claims, User user){
-        claims.put("Authorities", user.getAuthorities().toString());
-        claims.put("nome",user.getName());
-        claims.put("phone",user.getPhoneNumber());
+        claims.put(JwtClaims.AUTHORITIES, user.getAuthorities().toString());
+        claims.put(JwtClaims.NAME,user.getName());
+        claims.put(JwtClaims.PHONE,user.getPhoneNumber());
     }
 
 
