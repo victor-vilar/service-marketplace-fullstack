@@ -11,7 +11,7 @@ public class ApiResponse<T> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date = LocalDate.now();
     private T response;
-    private boolean sucess;
+    private boolean success;
     private String message;
     private static final String DEFAULT_SUCCESS = "Operação Realizada com Sucesso !";
     private static final String DEFAULT_FAIL = "Erro !";
@@ -20,9 +20,9 @@ public class ApiResponse<T> {
 
     }
 
-    public ApiResponse(T object,boolean sucess,String message, List<String> errors){
+    public ApiResponse(T object,boolean success,String message){
         this.response = object;
-        this.sucess = sucess;
+        this.success = success;
         this.message = message;
     }
 
@@ -34,7 +34,14 @@ public class ApiResponse<T> {
         return response;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
 
+    public String getMessage() {
+        return message;
+    }
+    
     public static ResponseBuilder success(){
         return new ResponseBuilder(true).message(DEFAULT_SUCCESS);
     }
@@ -57,7 +64,7 @@ public class ApiResponse<T> {
 
         private boolean success;
         private String message = "";
-        private List<String> errors = new ArrayList<>();
+
 
         public ResponseBuilder(boolean status){
             success = status;
@@ -70,7 +77,7 @@ public class ApiResponse<T> {
 
 
         public <T> ApiResponse<T> build(T response){
-            return new ApiResponse<>(response,this.success,this.message,this.errors);
+            return new ApiResponse<>(response,this.success,this.message);
 
         }
 
