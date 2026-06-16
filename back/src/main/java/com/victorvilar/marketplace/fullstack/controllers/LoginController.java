@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.controllers;
 
+import com.victorvilar.marketplace.fullstack.domain.ApiResponse;
 import com.victorvilar.marketplace.fullstack.domain.JwtClaims;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.LoginDTO;
@@ -25,6 +26,7 @@ public class LoginController {
     private final JwtService jwtService;
     private final UserServiceDefaultImpl userServiceDefaultImpl;
     private final AuthenticationManager authManager;
+    private static final String SUCCESSFULL_AUTHENTICATION = "Login realizado com sucesso !";
 
     @Autowired
     public LoginController(JwtService jwtService, UserServiceDefaultImpl userServiceDefaultImpl, AuthenticationManager authManager){
@@ -34,7 +36,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<String> login(@Valid @RequestBody LoginDTO login){
+    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginDTO login){
 
         //se não encontrar o spring lança erro automaticamente
         var auth = new UsernamePasswordAuthenticationToken(login.username(),login.password());
@@ -51,7 +53,7 @@ public class LoginController {
         var jwt = jwtService.generateKey(user.getUsername(),"dados",claims);
 
         //retorna token no body
-        return ResponseEntity.ok().body(jwt);
+        return ResponseEntity.ok().body(ApiResponse.success(SUCCESSFULL_AUTHENTICATION).build(jwt));
 
     }
 
