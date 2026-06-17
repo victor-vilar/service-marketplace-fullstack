@@ -20,10 +20,13 @@ public class ModelMapperConfig {
         /** Configuração de Job*/
         mapper
                 .typeMap(Job.class,JobDTO.class)
-                .addMapping(src-> src.getProvider().getId(),JobDTO::setProvider);
+                .addMappings(src-> {
+                            src.map(maper -> maper.getProvider().getId(), JobDTO::setProvider);
+                            src.map(maper -> maper.getCategory().getName(), JobDTO::setCategory);
+                });
         mapper
                 .typeMap(JobDTO.class, Job.class)
-                        .addMappings(src -> src.skip(Job::setId));
+                .addMappings(src -> src.skip(Job::setId));
 
         /** Configuração de Order */
         mapper
