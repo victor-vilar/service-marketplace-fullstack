@@ -116,6 +116,11 @@ public class JobDTO{
             return this;
         }
 
+        public Builder price(BigDecimal price){
+            this.price = price;
+            return this;
+        }
+
         public Builder category(String category){
             this.category = category;
             return this;
