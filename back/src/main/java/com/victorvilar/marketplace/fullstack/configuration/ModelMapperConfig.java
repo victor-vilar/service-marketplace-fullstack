@@ -16,10 +16,16 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper(){
         ModelMapper mapper = new ModelMapper();
+
+        /** Configuração de Job*/
         mapper
                 .typeMap(Job.class,JobDTO.class)
                 .addMapping(src-> src.getProvider().getId(),JobDTO::setProvider);
+        mapper
+                .typeMap(JobDTO.class, Job.class)
+                        .addMappings(src -> src.skip(Job::setId));
 
+        /** Configuração de Order */
         mapper
                 .typeMap(Order.class, OrderDTO.class)
                 .addMappings(src ->{
@@ -28,9 +34,16 @@ public class ModelMapperConfig {
                 });
 
         mapper
+                .typeMap(OrderDTO.class, Order.class)
+                .addMappings(src -> src.skip(Order::setId));
+
+        /** Configuração de User */
+        mapper
                 .typeMap(User.class,UserDTO.class)
                 .addMappings(src -> src.skip(UserDTO::setPassword));
-
+        mapper
+                .typeMap(UserDTO.class, User.class)
+                .addMappings(src -> src.skip(User::setId));
         return mapper;
     }
 
