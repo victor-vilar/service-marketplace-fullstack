@@ -22,8 +22,8 @@ public class JobMapper {
         return this.mapper.map(dto, Job.class);
     }
 
-    public JobDTO toDto(Job user){
-        return mapper.map(user, JobDTO.class);
+    public JobDTO toDto(Job job){
+        return mapper.map(job, JobDTO.class);
     }
 
     public void copy(JobDTO src, Job dest){
