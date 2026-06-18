@@ -12,7 +12,7 @@ public interface JobService {
     public JobDTO getById(UUID id);
     public List<JobDTO> getByProvider(UUID providerId);
     public List<JobDTO> getByCategory(String categoryName);
-    public JobDTO update(JobDTO job);
+    public JobDTO update(JobDTO dto);
     public void delete(UUID id);
     public JobDTO getByIdWithOrders(UUID id);
 }
