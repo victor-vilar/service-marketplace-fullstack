@@ -34,6 +34,7 @@ class JobRepositoryTest {
 
     Job job1;
     Job job2;
+    Job job3;
 
     Order order1;
     Order order2;
@@ -74,17 +75,21 @@ class JobRepositoryTest {
 
         job1 = new Job();
         job2 = new Job();
+        job3 = new Job();
 
 
 
         job1.setTitle("Detetização");
         job2.setTitle("Lavagem Automotiva");
+        job3.setTitle("Terceiro job");
 
         job1.setDescription("detetização de pragas e vetores");
         job2.setDescription("lavagem de carros");
+        job3.setDescription("terceiro job");
 
         job1.setPrice(BigDecimal.valueOf(100));
         job2.setPrice(BigDecimal.valueOf(100));
+        job3.setPrice(BigDecimal.valueOf(100));
 
     }
 
@@ -219,6 +224,45 @@ class JobRepositoryTest {
 
         assertEquals(jobComCategoria1.get(0).getCategory(), cat1);
         assertEquals(jobComCategoria2.get(0).getCategory(), cat2);
+
+
+    }
+
+    @Test
+    void findByActiveDeveSomenteTrazerOsJobsQUeTiveremOMesmoBoolean(){
+        Category cat1 = new Category("Mecanico");
+        Category cat2 = new Category("Padeiro");
+
+        cat1 = manager.persist(cat1);
+        cat2 = manager.persist(cat2);
+
+        job1.setCategory(cat1);
+        job2.setCategory(cat2);
+        job3.setCategory(cat2);
+        user1 = manager.persist(user1);
+
+        job1.setProvider(user1);
+        job2.setProvider(user1);
+        job3.setProvider(user1);
+
+        job1 = manager.persist(job1);
+        job2 = manager.persist(job2);
+        job3.setActive(false);
+        job3 = manager.persist(job3);
+
+
+
+        List<Job> activeJobs = repository.findByActive(true);
+        assertEquals(activeJobs.size(),2);
+        assertTrue(activeJobs.get(0).isActive());
+        assertTrue(activeJobs.get(1).isActive());
+
+        List<Job> unActiveJobs = repository.findByActive(false);
+        assertEquals(unActiveJobs.size(),1);
+        assertFalse(unActiveJobs.get(0).isActive());
+
+
+
 
 
     }
