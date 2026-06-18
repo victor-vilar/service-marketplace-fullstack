@@ -14,7 +14,7 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
 
     @Query("SELECT j FROM Job j LEFT JOIN FETCH j.orders WHERE j.id = :id")
     public Optional<Job> findByIdWithOrders(@Param("id") UUID id);
-
+    public List<Job> findByActive(boolean active);
     public List<Job> findByProviderId(UUID providerId);
     public List<Job> findByCategoryName(String category);
 
