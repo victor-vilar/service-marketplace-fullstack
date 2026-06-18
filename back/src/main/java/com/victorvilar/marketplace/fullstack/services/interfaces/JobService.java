@@ -11,7 +11,7 @@ public interface JobService {
     public List<JobDTO> getAll();
     public JobDTO getById(UUID id);
     public List<JobDTO> getByProvider(UUID providerId);
-    public List<JobDTO> getByCategory(UUID categoryId);
+    public List<JobDTO> getByCategory(String categoryName);
     public JobDTO update(JobDTO job);
     public void delete(UUID id);
     public JobDTO getByIdWithOrders(UUID id);
