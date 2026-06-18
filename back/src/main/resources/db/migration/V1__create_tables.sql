@@ -31,6 +31,7 @@ CREATE TABLE tb_jobs
     title       VARCHAR(150)   NOT NULL,
     description VARCHAR(400)   NOT NULL,
     price       DECIMAL(10, 2) NOT NULL,
+    active      BOOLEAN DEFAULT TRUE,
     category_id UUID           NOT NULL,
     provider_id UUID           NOT NULL,
     CONSTRAINT category_fk FOREIGN KEY (category_id) REFERENCES tb_categories (id) ON DELETE SET NULL,
