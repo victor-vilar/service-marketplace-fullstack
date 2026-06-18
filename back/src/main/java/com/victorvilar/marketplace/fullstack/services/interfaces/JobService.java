@@ -2,6 +2,7 @@ package com.victorvilar.marketplace.fullstack.services.interfaces;
 
 import com.victorvilar.marketplace.fullstack.domain.Job;
 import com.victorvilar.marketplace.fullstack.dtos.JobDTO;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 public interface JobService {
 
     public List<JobDTO> getAll();
+    public List<JobDTO> getByActive(boolean active);
     public JobDTO getById(UUID id);
     public List<JobDTO> getByProvider(UUID providerId);
     public List<JobDTO> getByCategory(String categoryName);
