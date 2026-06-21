@@ -2,11 +2,14 @@ package com.victorvilar.marketplace.fullstack.controllers;
 
 import com.victorvilar.marketplace.fullstack.domain.ApiResponse;
 import com.victorvilar.marketplace.fullstack.domain.JwtClaims;
+import com.victorvilar.marketplace.fullstack.domain.Order;
 import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.LoginDTO;
 import com.victorvilar.marketplace.fullstack.services.JwtService;
 import com.victorvilar.marketplace.fullstack.services.implementation.UserServiceDefaultImpl;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,7 @@ import java.util.Map;
 @RequestMapping("/api/login")
 public class LoginController {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final JwtService jwtService;
     private final UserServiceDefaultImpl userServiceDefaultImpl;
     private final AuthenticationManager authManager;
@@ -52,6 +55,7 @@ public class LoginController {
         //cria o token
         var jwt = jwtService.generateKey(user.getUsername(),"dados",claims);
 
+        logger.info("login realizado pelo usuário: {}",user.getUsername());
         //retorna token no body
         return ResponseEntity.ok().body(ApiResponse.success(SUCCESSFULL_AUTHENTICATION).build(jwt));
 
@@ -61,6 +65,7 @@ public class LoginController {
         claims.put(JwtClaims.AUTHORITIES, user.getAuthorities().toString());
         claims.put(JwtClaims.NAME,user.getName());
         claims.put(JwtClaims.PHONE,user.getPhoneNumber());
+        claims.put(JwtClaims.ID,user.getId().toString());
     }
 
 
