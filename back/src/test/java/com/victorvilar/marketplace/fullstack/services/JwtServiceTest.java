@@ -10,6 +10,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +28,7 @@ class JwtServiceTest {
     @Test
     void deveMontarUmUserComOsDadosDoJWTComSucesso(){
         User user = new User();
+        user.setId(UUID.randomUUID());
         user.setName("Victor");
         user.setPhoneNumber("123456");
         user.addRole(TipoUsuario.ADMINISTRADOR);
@@ -35,6 +37,7 @@ class JwtServiceTest {
         claims.put(JwtClaims.AUTHORITIES, user.getAuthorities().toString());
         claims.put(JwtClaims.NAME,user.getName());
         claims.put(JwtClaims.PHONE,user.getPhoneNumber());
+        claims.put(JwtClaims.ID,user.getId().toString());
 
         String jwt = service.generateKey(user.getName(),"dados",claims);
         User user2 = service.verifyKey(jwt);
@@ -42,6 +45,7 @@ class JwtServiceTest {
         Assertions.assertEquals(user.getName(),user2.getName());
         Assertions.assertEquals(user.getPhoneNumber(),user2.getPhoneNumber());
         Assertions.assertArrayEquals(user.getAuthorities().toArray(),user2.getAuthorities().toArray());
+        Assertions.assertEquals(user.getId(),user2.getId());
     }
 
 }
