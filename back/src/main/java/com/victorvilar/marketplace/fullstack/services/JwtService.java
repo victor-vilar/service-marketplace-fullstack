@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class JwtService {
@@ -98,6 +95,7 @@ public class JwtService {
 
         user.setName((String) dados.get(JwtClaims.NAME));
         user.setPhoneNumber((String) dados.get(JwtClaims.PHONE));
+        user.setId(UUID.fromString((String) dados.get(JwtClaims.ID)));
 
         String authorities = (String)dados.get(JwtClaims.AUTHORITIES);
         String autho = authorities.replaceAll("\\[|\\]","").replace(" ","");
