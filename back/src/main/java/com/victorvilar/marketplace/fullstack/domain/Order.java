@@ -1,6 +1,7 @@
 package com.victorvilar.marketplace.fullstack.domain;
 
 import com.victorvilar.marketplace.fullstack.enums.OrderStatus;
+import com.victorvilar.marketplace.fullstack.exceptions.SameCustomerAndProviderException;
 import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import java.util.UUID;
 public class Order implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(Order.class);
+    private static final String SAME_CUSTOMER = "O cliente selecionado é o mesmo que oferece o serviço !";
+    private static final String SAME_PROVIDER = "O serviço selecionado é fornecido pelo cliente selecionado";
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -117,7 +120,8 @@ public class Order implements Serializable {
             this.customer = customer;
             customer.addOrder(this);
         }else {
-            logger.error("O cliente selecionado é o mesmo que oferece o serviço !");
+            logger.error(SAME_CUSTOMER);
+            throw new SameCustomerAndProviderException(SAME_CUSTOMER);
         }
     }
 
@@ -133,7 +137,9 @@ public class Order implements Serializable {
             this.job = job;
             job.addOrder(this);
         }else {
-            logger.error("O serviço selecionado é fornecido pelo cliente selecionado");
+            logger.error(SAME_PROVIDER);
+            throw new SameCustomerAndProviderException(SAME_PROVIDER);
+
         }
     }
 
