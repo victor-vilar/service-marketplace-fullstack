@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.services.implementation;
 
+import com.victorvilar.marketplace.fullstack.dtos.RegisterDTO;
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import com.victorvilar.marketplace.fullstack.enums.TipoUsuario;
 import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
@@ -8,6 +9,7 @@ import com.victorvilar.marketplace.fullstack.mappers.UserMapper;
 import com.victorvilar.marketplace.fullstack.repositories.UserRepository;
 import com.victorvilar.marketplace.fullstack.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +22,13 @@ public class UserServiceDefaultImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
     private final String USER_NOT_FOUND = "Usuário não encontrado !";
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceDefaultImpl(UserRepository repository,UserMapper mapper){
+    public UserServiceDefaultImpl(UserRepository repository,UserMapper mapper, PasswordEncoder encoder){
         this.repository = repository;
         this.mapper = mapper;
+        this.encoder = encoder;
 
     }
 
@@ -53,6 +57,17 @@ public class UserServiceDefaultImpl implements UserService {
         User user = mapper.toEntity(entity);
         return mapper.toDto(repository.save(user));
 
+    }
+
+    @Override
+    public UserDTO save(RegisterDTO register){
+
+        User user = new User();
+        user.setName(register.name());
+        user.setEmail(register.email());
+        user.setPassword(encoder.encode(register.password()));
+
+        return mapper.toDto(repository.save(user));
     }
 
     @Override
