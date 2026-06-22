@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.services.interfaces;
 
+import com.victorvilar.marketplace.fullstack.dtos.RegisterDTO;
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import com.victorvilar.marketplace.fullstack.enums.TipoUsuario;
 
@@ -11,6 +12,7 @@ public interface UserService{
     public List<UserDTO> getAll();
     public UserDTO getById(UUID id);
     public UserDTO save(UserDTO entity);
+    public UserDTO save(RegisterDTO register);
     public UserDTO update(UserDTO entity);
     public void delete(UUID id);
     public List<UserDTO> getAllActive();
