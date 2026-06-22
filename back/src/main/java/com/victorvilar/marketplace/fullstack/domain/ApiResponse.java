@@ -54,10 +54,15 @@ public class ApiResponse<T> {
         return success().build(response);
     }
 
+
+
     public static ResponseBuilder fail(){
         return new ResponseBuilder(false).message(DEFAULT_FAIL);
     }
 
+    public static <T> ApiResponse<T> fail(T response){
+        return fail().message(DEFAULT_FAIL).build(response);
+    }
 
 
     public static class ResponseBuilder{
