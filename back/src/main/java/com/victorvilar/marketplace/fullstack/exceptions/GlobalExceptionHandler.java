@@ -12,7 +12,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiResponse<ErrorResponse>> handleUserNotFoundException(UserNotFoundException ex){
-        ErrorResponse erro = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
-        return ResponseEntity.status(erro.getHttpStatus()).body(ApiResponse.fail().build(erro));
+        ErrorResponse err = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
+        return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
+    }
+
+    @ExceptionHandler(SameCustomerAndProviderException.class)
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleSameCustomerAndProviderExeption(SameCustomerAndProviderException ex){
+        ErrorResponse err = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
     }
 }
