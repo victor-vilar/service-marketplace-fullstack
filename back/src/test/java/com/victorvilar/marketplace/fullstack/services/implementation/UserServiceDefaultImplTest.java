@@ -3,6 +3,7 @@ package com.victorvilar.marketplace.fullstack.services.implementation;
 import com.victorvilar.marketplace.fullstack.domain.Category;
 import com.victorvilar.marketplace.fullstack.domain.Job;
 import com.victorvilar.marketplace.fullstack.domain.User;
+import com.victorvilar.marketplace.fullstack.dtos.RegisterDTO;
 import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
 import com.victorvilar.marketplace.fullstack.mappers.UserMapper;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +37,9 @@ class UserServiceDefaultImplTest {
 
     @Mock
     private UserMapper mapper;
+
+    @Mock
+    private PasswordEncoder encoder;
 
     User user1;
     User user2;
@@ -140,6 +145,25 @@ class UserServiceDefaultImplTest {
         verify(service,times(1)).update(any(UserDTO.class));
         Assertions.assertEquals(userDto.getName(),userDto1.getName());
         Assertions.assertEquals(userDto.getEmail(),userDto1.getEmail());
+
+    }
+
+    @Test
+    void saveDeUmRegisterDTODeveRetornarUmUsuarioSalvo(){
+        RegisterDTO register = new RegisterDTO("teste","teste@gmail.com","123456");
+
+        UserDTO dto = UserDTO.builder()
+                .name("usuario")
+                .email("email")
+                .phoneNumber("telefone")
+                .build();
+
+        when(encoder.encode(any())).thenReturn("password-encoded");
+        when(repository.save(any())).thenReturn(user1);
+        when(mapper.toDto(any())).thenReturn(dto);
+        UserDTO user = service.save(register);
+
+        Assertions.assertEquals(user.getId(),user1.getId());
 
     }
 
