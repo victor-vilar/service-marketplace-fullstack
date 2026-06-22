@@ -13,6 +13,7 @@ public class JobDTO{
     private String title;
     private String description;
     private BigDecimal price = BigDecimal.ZERO;
+    private boolean active;
     private String category = "";
     private String provider;
     private List<OrderDTO> orders = new ArrayList<>();
@@ -21,7 +22,15 @@ public class JobDTO{
 
     }
 
-    public JobDTO(String id, String title, String description, BigDecimal price, String category, String provider , List<OrderDTO> orders){
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public JobDTO(String id, String title, String description, BigDecimal price, String category, String provider , List<OrderDTO> orders, boolean active){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,6 +38,9 @@ public class JobDTO{
         this.category = category;
         this.provider = provider;
         this.orders = orders;
+        this.active = active;
+
+
     }
 
     public String getId() {
@@ -97,6 +109,7 @@ public class JobDTO{
         private String title;
         private String description;
         private BigDecimal price = BigDecimal.ZERO;
+        private boolean active;
         private String category = "";
         private String provider;
         private List<OrderDTO> orders = new ArrayList<>();
@@ -121,6 +134,11 @@ public class JobDTO{
             return this;
         }
 
+        public Builder active(boolean active){
+            this.active  = active;
+            return this;
+        }
+
         public Builder category(String category){
             this.category = category;
             return this;
@@ -141,7 +159,7 @@ public class JobDTO{
             if(this.title == null || this.description == null || this.provider == null){
                 throw new IllegalStateException("Um job deve ter um titulo, descrição e provedor");
             }
-            return new JobDTO(id,title,description,price,category,provider,orders);
+            return new JobDTO(id,title,description,price,category,provider,orders,active);
         }
 
     }
