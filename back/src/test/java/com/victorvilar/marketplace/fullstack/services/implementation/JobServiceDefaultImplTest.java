@@ -7,7 +7,6 @@ import com.victorvilar.marketplace.fullstack.enums.PaymentMethod;
 import com.victorvilar.marketplace.fullstack.enums.PaymentStatus;
 import com.victorvilar.marketplace.fullstack.mappers.JobMapper;
 import com.victorvilar.marketplace.fullstack.repositories.JobRepository;
-import com.victorvilar.marketplace.fullstack.services.interfaces.JobService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -300,7 +298,7 @@ class JobServiceDefaultImplTest {
         order2 = new Order();
 
 
-        order1.setOrderStatus(OrderStatus.ABERTA);
+        order1.setOrderStatus(OrderStatus.EM_ANDAMENTO);
         order2.setOrderStatus(OrderStatus.CONCLUIDO);
 
         order1.setTotalAmount(BigDecimal.valueOf(1000));
@@ -309,11 +307,11 @@ class JobServiceDefaultImplTest {
         Payment p1 = new Payment();
         Payment p2 = new Payment();
 
-        p1.setPaymentStatus(PaymentStatus.ABERTA);
-        p2.setPaymentStatus(PaymentStatus.CONCLUIDO);
+        p1.setStatus(PaymentStatus.EM_ABERTO);
+        p2.setStatus(PaymentStatus.PAGAMENTO_REALIZADO);
 
-        p1.setPaymentMethod(PaymentMethod.BOLETO);
-        p2.setPaymentMethod(PaymentMethod.PIX);
+        p1.setMethod(PaymentMethod.BOLETO);
+        p2.setMethod(PaymentMethod.PIX);
 
         order1.setPayment(p1);
         order2.setPayment(p2);

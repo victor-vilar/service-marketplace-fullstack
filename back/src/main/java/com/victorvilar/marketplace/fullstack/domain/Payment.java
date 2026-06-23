@@ -15,10 +15,10 @@ public class Payment {
     private UUID id;
 
     @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus = PaymentStatus.ABERTA;
+    private PaymentStatus status = PaymentStatus.EM_ABERTO;
 
     @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
+    private PaymentMethod method;
 
     @OneToOne
     @JoinColumn(name="order_id")
@@ -32,20 +32,20 @@ public class Payment {
         this.id = id;
     }
 
-    public PaymentStatus getPaymentStatus() {
-        return paymentStatus;
+    public PaymentStatus getStatus() {
+        return status;
     }
 
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
+    public PaymentMethod getMethod() {
+        return method;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setMethod(PaymentMethod method) {
+        this.method = method;
     }
 
     public Order getOrder() {
