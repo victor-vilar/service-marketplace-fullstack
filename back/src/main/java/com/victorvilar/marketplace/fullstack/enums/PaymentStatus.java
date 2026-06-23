@@ -3,8 +3,8 @@ package com.victorvilar.marketplace.fullstack.enums;
 public enum PaymentStatus {
 
 
-    ABERTA("Aberta"),
-    CONCLUIDO("Concluído");
+    EM_ABERTO("Em aberto"),
+    PAGAMENTO_REALIZADO("Pagamento Realizado");
 
     private final String status;
 
