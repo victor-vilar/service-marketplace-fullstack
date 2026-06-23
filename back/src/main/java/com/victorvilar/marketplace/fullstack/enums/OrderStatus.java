@@ -2,7 +2,7 @@ package com.victorvilar.marketplace.fullstack.enums;
 
 public enum OrderStatus {
 
-    ABERTA("Aberta"),
+
     EM_ANDAMENTO("Em Andamento"),
     CONCLUIDO("Concluído");
 
