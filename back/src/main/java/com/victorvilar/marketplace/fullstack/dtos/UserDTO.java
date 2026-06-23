@@ -2,9 +2,7 @@ package com.victorvilar.marketplace.fullstack.dtos;
 
 import jakarta.validation.constraints.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class UserDTO{
 
@@ -15,6 +13,7 @@ public class UserDTO{
     private String phoneNumber = "";
     private List<JobDTO> jobs;
     private List<OrderDTO> orders;
+    private Set<String> authorities;
 
     public String getId() {
         return id;
@@ -73,11 +72,19 @@ public class UserDTO{
         this.password = password;
     }
 
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> roles) {
+        this.authorities = roles;
+    }
+
     public UserDTO(){
 
     }
 
-    public UserDTO(String id, @NotNull String name, @NotNull String email, String password, String phoneNumber, List<JobDTO> jobs, List<OrderDTO> orders){
+    public UserDTO(String id, @NotNull String name, @NotNull String email, String password, String phoneNumber, List<JobDTO> jobs, List<OrderDTO> orders, Set<String> authorities){
         this.id = id;
         this.name = name;
         this.email = email;
@@ -85,7 +92,7 @@ public class UserDTO{
         this.phoneNumber = phoneNumber;
         this.jobs = jobs;
         this.orders = orders;
-
+        this.authorities = authorities;
     }
 
 
@@ -101,6 +108,7 @@ public class UserDTO{
         private String phoneNumber = "";
         private List<JobDTO> jobs = new ArrayList<>();
         private List<OrderDTO> orders = new ArrayList<>();
+        private Set<String> authorities = new HashSet<>();
 
         public Builder id(String id){
             this.id = id;
@@ -137,13 +145,18 @@ public class UserDTO{
             return this;
         }
 
+        public Builder authorities(Set<String> authorities){
+            this.authorities = authorities;
+            return this;
+        }
+
         public UserDTO build(){
 
             if(this.name == null || this.email == null){
                 throw new IllegalStateException("Um usuario deve possuir um nome, email e id");
             }
 
-            return new UserDTO(id,name,email,password,phoneNumber,jobs,orders);
+            return new UserDTO(id,name,email,password,phoneNumber,jobs,orders, authorities);
 
         }
 
