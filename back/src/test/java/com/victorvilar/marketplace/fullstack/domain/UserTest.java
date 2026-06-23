@@ -44,8 +44,8 @@ class UserTest {
 
         user.addRole(TipoUsuario.ADMINISTRADOR);
         Assertions.assertThat(user.getAuthorities().contains(TipoUsuario.ADMINISTRADOR.getTipo()));
-        Assertions.assertThat(!user.getAuthorities().contains(TipoUsuario.USUARIO.getTipo()));
-        org.junit.jupiter.api.Assertions.assertEquals(user.getAuthorities().size(), 1);
+        Assertions.assertThat(user.getAuthorities().contains(TipoUsuario.USUARIO.getTipo()));
+        org.junit.jupiter.api.Assertions.assertEquals(user.getAuthorities().size(), 2);
         user.addRole(TipoUsuario.USUARIO);
         Assertions.assertThat(user.getAuthorities().contains(TipoUsuario.USUARIO.getTipo()));
         org.junit.jupiter.api.Assertions.assertEquals(user.getAuthorities().size(), 2);
