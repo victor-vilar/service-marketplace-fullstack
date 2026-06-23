@@ -111,13 +111,13 @@ public class UserServiceDefaultImpl implements UserService {
     public UserDTO addRole(UUID id , TipoUsuario tipo) {
         User user = getByIdNoMap(id);
         user.addRole(tipo);
-        return mapper.toDto(user);
+        return mapper.toDto(repository.save(user));
     }
 
     @Override
     public UserDTO removeRole(UUID id ,TipoUsuario tipo){
         User user = getByIdNoMap(id);
-        user.addRole(tipo);
-        return mapper.toDto(user);
+        user.removeRole(tipo);
+        return mapper.toDto(repository.save(user));
     }
 }
