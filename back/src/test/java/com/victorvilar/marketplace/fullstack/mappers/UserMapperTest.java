@@ -35,7 +35,7 @@ class UserMapperTest {
     @Test
     void deveCopiarOsDadosDoDtoParaAEntitySemAlterarOID() {
 
-        dto = new UserDTO(UUID.randomUUID().toString(), "Astolfo", "astolfo@gmail.com", "123", null, null, null);
+        dto = new UserDTO(UUID.randomUUID().toString(), "Astolfo", "astolfo@gmail.com", "123", null, null, null,null);
 
         user = new User();
         user.setName("Ipsum");
@@ -81,7 +81,7 @@ class UserMapperTest {
     @Test
     void deveCriarUmNovoUserCopiandoDto() {
 
-        dto = new UserDTO(UUID.randomUUID().toString(), "Astolfo", "astolfo@gmail.com", "123", null, null, null);
+        dto = new UserDTO(UUID.randomUUID().toString(), "Astolfo", "astolfo@gmail.com", "123", null, null, null, null);
         user = mapper.toEntity(dto);
 
         Assertions.assertNull(user.getId());
