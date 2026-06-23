@@ -4,6 +4,7 @@ import com.victorvilar.marketplace.fullstack.domain.ApiResponse;
 import com.victorvilar.marketplace.fullstack.domain.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -21,4 +22,12 @@ public class GlobalExceptionHandler {
         ErrorResponse err = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleOthersExceptions(MethodArgumentNotValidException ex){
+        String msg = "O objeto não pode ser construído !";
+        ErrorResponse err = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
+        return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
+    }
+
 }
