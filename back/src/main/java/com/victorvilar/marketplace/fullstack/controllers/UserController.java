@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService service;
-
+    private static final String DELETE_MESSAGE = "Usuário deletado com sucesso !";
 
     @Autowired
     public UserController(UserService service){
@@ -42,9 +42,27 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(dto));
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<ApiResponse<UserDTO>> updateUser(@Valid @RequestBody UserDTO dtoToUpdate){
         UserDTO dto = service.update(dtoToUpdate);
         return ResponseEntity.ok(ApiResponse.success(dto));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<String>> deleteUser(String id){
+        service.delete(UUID.fromString(id));
+        return ResponseEntity.ok(ApiResponse.success().build(DELETE_MESSAGE));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<UserDTO>>> getAll(){
+        List<UserDTO> users = service.getAll();
+        return ResponseEntity.ok(ApiResponse.success(users));
+    }
+
+    @GetMapping("/all-active")
+    public ResponseEntity<ApiResponse<List<UserDTO>>> getAllActive(){
+        List<UserDTO> users = service.getAllActive();
+        return ResponseEntity.ok(ApiResponse.success(users));
     }
 }
