@@ -4,6 +4,8 @@ import com.victorvilar.marketplace.fullstack.domain.ApiResponse;
 import com.victorvilar.marketplace.fullstack.domain.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -30,4 +32,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleBadCredentialsException(BadCredentialsException ex){
+        String msg = "Usuário ou Senha inválidos !";
+        ErrorResponse err = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), msg);
+        return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleBadCredentialsException(DisabledException ex){
+        String msg = "Conta inátiva !";
+        ErrorResponse err = new ErrorResponse(HttpStatus.FORBIDDEN.value(), msg);
+        return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
+    }
 }
