@@ -7,6 +7,7 @@ import com.victorvilar.marketplace.fullstack.domain.User;
 import com.victorvilar.marketplace.fullstack.dtos.LoginDTO;
 import com.victorvilar.marketplace.fullstack.services.JwtService;
 import com.victorvilar.marketplace.fullstack.services.implementation.UserServiceDefaultImpl;
+import com.victorvilar.marketplace.fullstack.services.interfaces.LoginService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,48 +26,23 @@ import java.util.Map;
 @RequestMapping("/api/login")
 public class LoginController {
 
+    private final LoginService service;
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-    private final JwtService jwtService;
-    private final UserServiceDefaultImpl userServiceDefaultImpl;
-    private final AuthenticationManager authManager;
     private static final String SUCCESSFULL_AUTHENTICATION = "Login realizado com sucesso !";
 
     @Autowired
-    public LoginController(JwtService jwtService, UserServiceDefaultImpl userServiceDefaultImpl, AuthenticationManager authManager){
-        this.jwtService = jwtService;
-        this.userServiceDefaultImpl = userServiceDefaultImpl;
-        this.authManager = authManager;
+    public LoginController(LoginService service){
+        this.service = service;
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginDTO login){
-
-        //se não encontrar o spring lança erro automaticamente
-        var auth = new UsernamePasswordAuthenticationToken(login.username(),login.password());
-
-        //Tenta realizar o login com os dados passados
-        Authentication authentication = authManager.authenticate(auth);
-
-        //Pega o usuario e cria os claims que vou querer adicionar ao jwt
-        User user = (User) authentication.getPrincipal();
-        Map<String, String> claims = new HashMap<>();
-        addClaims(claims, user);
-
-        //cria o token
-        var jwt = jwtService.generateKey(user.getUsername(),"dados",claims);
-
-        logger.info("login realizado pelo usuário: {}",user.getUsername());
-        //retorna token no body
+        String jwt = service.login(login);
+        logger.info(SUCCESSFULL_AUTHENTICATION);
         return ResponseEntity.ok().body(ApiResponse.success(SUCCESSFULL_AUTHENTICATION).build(jwt));
-
     }
 
-    private void addClaims(Map<String, String> claims, User user){
-        claims.put(JwtClaims.AUTHORITIES, user.getAuthorities().toString());
-        claims.put(JwtClaims.NAME,user.getName());
-        claims.put(JwtClaims.PHONE,user.getPhoneNumber());
-        claims.put(JwtClaims.ID,user.getId().toString());
-    }
+
 
 
 }
