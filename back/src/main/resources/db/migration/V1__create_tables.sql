@@ -55,8 +55,8 @@ CREATE TABLE tb_orders
 CREATE TABLE tb_payments
 (
     id             UUID PRIMARY KEY,
-    payment_status VARCHAR(50) NOT NULL,
-    payment_method VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    method VARCHAR(50) NOT NULL,
     order_id       UUID        NOT NULL,
     CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES tb_orders (id)
 
