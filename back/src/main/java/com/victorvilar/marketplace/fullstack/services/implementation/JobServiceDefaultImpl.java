@@ -56,6 +56,15 @@ public class JobServiceDefaultImpl implements JobService {
     }
 
     @Override
+    public JobDTO save(JobDTO jobDTO) {
+        if(jobDTO.getId() != null){
+            return update(jobDTO);
+        }
+        Job job = mapper.toEntity(jobDTO);
+        return mapper.toDto(repository.save(job));
+    }
+
+    @Override
     public JobDTO update(JobDTO dto) {
         Job job = getByIdNoMap(UUID.fromString(dto.getId()));
         mapper.copy(dto,job);
