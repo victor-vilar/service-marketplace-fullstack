@@ -2,6 +2,7 @@ package com.victorvilar.marketplace.fullstack.services.implementation;
 
 import com.victorvilar.marketplace.fullstack.domain.*;
 import com.victorvilar.marketplace.fullstack.dtos.JobDTO;
+import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import com.victorvilar.marketplace.fullstack.enums.OrderStatus;
 import com.victorvilar.marketplace.fullstack.enums.PaymentMethod;
 import com.victorvilar.marketplace.fullstack.enums.PaymentStatus;
@@ -240,6 +241,34 @@ class JobServiceDefaultImplTest {
 
     }
 
+    @Test
+    public void save_deveSalvarUmNovoJobQuandoODtoPassadoNaoPossuiID(){
+        when(repository.save(any(Job.class))).thenReturn(job1);
+        when(mapper.toEntity(any(JobDTO.class))).thenReturn(job1);
+        JobDTO dto = createDTO(job1);
+        dto.setId(null);
+        JobDTO jobSalvo = service.save(dto);
+
+        verify(mapper,times(1)).toEntity(dto);
+        verify(mapper,times(1)).toDto(job1);
+        verify(repository,times(1)).save(any(Job.class));
+        verify(service,never()).update(any(JobDTO.class));
+    }
+
+    @Test
+    public void save_deveChamarMetodoSalvarDoServiceQuandoODtoPassadoPossuiId(){
+        when(repository.save(any(Job.class))).thenReturn(job1);
+        when(repository.findById(any(UUID.class))).thenReturn(Optional.of(job1));
+        JobDTO dto = createDTO(job1);
+        JobDTO jobUpdated = service.save(dto);
+        verify(service,times(1)).update(any(JobDTO.class));
+    }
+
+    @Test
+    public void save_deveChamarMetodoUpdateQUandoODtoPossuirUmID(){
+
+    }
+
 
     public void setUsers() {
         user1 = new User();
@@ -290,6 +319,9 @@ class JobServiceDefaultImplTest {
         job1.setProvider(user1);
         job2.setProvider(user1);
         job3.setProvider(user1);
+
+        job1.setCategory(new Category("Mecanica"));
+        job1.getCategory().setId(UUID.randomUUID());
 
     }
 
