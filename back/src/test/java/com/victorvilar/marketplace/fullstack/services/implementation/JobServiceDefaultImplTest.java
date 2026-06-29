@@ -256,17 +256,12 @@ class JobServiceDefaultImplTest {
     }
 
     @Test
-    public void save_deveChamarMetodoSalvarDoServiceQuandoODtoPassadoPossuiId(){
+    public void save_deveChamarMetodoUpdateDoServiceQuandoODtoPassadoPossuiId(){
         when(repository.save(any(Job.class))).thenReturn(job1);
         when(repository.findById(any(UUID.class))).thenReturn(Optional.of(job1));
         JobDTO dto = createDTO(job1);
         JobDTO jobUpdated = service.save(dto);
         verify(service,times(1)).update(any(JobDTO.class));
-    }
-
-    @Test
-    public void save_deveChamarMetodoUpdateQUandoODtoPossuirUmID(){
-
     }
 
 
