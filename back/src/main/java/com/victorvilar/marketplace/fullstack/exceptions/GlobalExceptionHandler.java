@@ -45,4 +45,10 @@ public class GlobalExceptionHandler {
         ErrorResponse err = new ErrorResponse(HttpStatus.FORBIDDEN.value(), msg);
         return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
     }
+
+    @ExceptionHandler(JobNotFoundException.class)
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleJobNotFoundException(JobNotFoundException ex){
+        ErrorResponse err = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
+        return ResponseEntity.status(err.getHttpStatus()).body(ApiResponse.fail(err));
+    }
 }
