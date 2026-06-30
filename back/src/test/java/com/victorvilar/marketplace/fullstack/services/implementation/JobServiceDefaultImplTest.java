@@ -6,6 +6,8 @@ import com.victorvilar.marketplace.fullstack.dtos.UserDTO;
 import com.victorvilar.marketplace.fullstack.enums.OrderStatus;
 import com.victorvilar.marketplace.fullstack.enums.PaymentMethod;
 import com.victorvilar.marketplace.fullstack.enums.PaymentStatus;
+import com.victorvilar.marketplace.fullstack.exceptions.JobNotFoundException;
+import com.victorvilar.marketplace.fullstack.exceptions.UserNotFoundException;
 import com.victorvilar.marketplace.fullstack.mappers.JobMapper;
 import com.victorvilar.marketplace.fullstack.repositories.JobRepository;
 import org.junit.jupiter.api.Assertions;
@@ -264,6 +266,28 @@ class JobServiceDefaultImplTest {
         verify(service,times(1)).update(any(JobDTO.class));
     }
 
+    @Test
+    public void getWithOrders_DeveTrazerUmJobComSuasOrders(){
+        JobDTO dto = createDTO(job1);
+        when(repository.findByIdWithOrders(any(UUID.class))).thenReturn(Optional.of(job1));
+        when(mapper.toDto(any(Job.class))).thenReturn(dto);
+        JobDTO dto1 = service.getByIdWithOrders(UUID.randomUUID());
+
+        Assertions.assertEquals(dto.getTitle(),dto1.getTitle());
+        Assertions.assertEquals(dto.getDescription(), dto1.getDescription());
+
+        verify(repository,times(1)).findByIdWithOrders(any(UUID.class));
+        verify(mapper,times(1)).toDto(any(Job.class));
+    }
+
+    @Test
+    public void getWithOrders_DeveLançarJobNotFoundExceptionQuandoNaoForEncontradoJob(){
+        when(repository.findByIdWithOrders(any(UUID.class))).thenThrow(new JobNotFoundException("O serviço não foi encontrado !"));
+        JobNotFoundException exception = Assertions.assertThrows(JobNotFoundException.class,() -> service.getByIdWithOrders(UUID.randomUUID()));
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals(exception.getMessage(), "O serviço não foi encontrado !");
+    }
+
 
     public void setUsers() {
         user1 = new User();
@@ -317,6 +341,12 @@ class JobServiceDefaultImplTest {
 
         job1.setCategory(new Category("Mecanica"));
         job1.getCategory().setId(UUID.randomUUID());
+
+        job2.setCategory(new Category("Mecanica"));
+        job2.getCategory().setId(UUID.randomUUID());
+
+        job3.setCategory(new Category("Mecanica"));
+        job3.getCategory().setId(UUID.randomUUID());
 
     }
 

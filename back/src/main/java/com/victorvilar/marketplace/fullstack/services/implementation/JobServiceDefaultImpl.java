@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -80,7 +81,7 @@ public class JobServiceDefaultImpl implements JobService {
 
     @Override
     public JobDTO getByIdWithOrders(UUID id) {
-        return this.mapper.toDto(repository.findByIdWithOrders(id).get());
-
+        Job job = repository.findByIdWithOrders(id).orElseThrow(() -> new JobNotFoundException(JOB_NOT_FOUND));
+        return mapper.toDto(job);
     }
 }
