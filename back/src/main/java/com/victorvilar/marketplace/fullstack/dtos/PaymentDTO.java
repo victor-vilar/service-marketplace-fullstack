@@ -7,8 +7,11 @@ public class PaymentDTO{
     private String paymentMethod;
     private String order;
 
+    public PaymentDTO(){
 
-    private PaymentDTO(String id, String paymentStatus, String paymentMethod, String order){
+    }
+
+    public PaymentDTO(String id, String paymentStatus, String paymentMethod, String order){
         this.id = id;
         this.paymentStatus = paymentStatus;
         this.paymentMethod = paymentMethod;
