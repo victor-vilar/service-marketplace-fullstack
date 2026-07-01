@@ -1,7 +1,5 @@
 package com.victorvilar.marketplace.fullstack.dtos;
 
-import java.util.UUID;
-
 public class PaymentDTO{
 
     private String id;
@@ -56,8 +54,8 @@ public class PaymentDTO{
 
     public static class Builder{
         String id = null;
-        String paymentStatus;
-        String paymentMethod;
+        String status;
+        String method;
         String order;
 
         public Builder id(String id){
@@ -65,13 +63,13 @@ public class PaymentDTO{
             return this;
         }
 
-        public Builder paymentStatus(String paymentStatus){
-            this.paymentStatus = paymentStatus;
+        public Builder status(String paymentStatus){
+            this.status = paymentStatus;
             return this;
         }
 
-        public Builder paymentMethod(String paymentMethod){
-            this.paymentMethod = paymentMethod;
+        public Builder method(String paymentMethod){
+            this.method = paymentMethod;
             return this;
         }
 
@@ -81,7 +79,7 @@ public class PaymentDTO{
         }
 
         public PaymentDTO build(){
-            return new PaymentDTO(id,paymentStatus,paymentMethod,order);
+            return new PaymentDTO(id, status,method,order);
         }
     }
 
