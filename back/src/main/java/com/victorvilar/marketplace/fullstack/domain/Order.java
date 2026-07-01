@@ -1,6 +1,7 @@
 package com.victorvilar.marketplace.fullstack.domain;
 
 import com.victorvilar.marketplace.fullstack.enums.OrderStatus;
+import com.victorvilar.marketplace.fullstack.enums.Reviewer;
 import com.victorvilar.marketplace.fullstack.exceptions.SameCustomerAndProviderException;
 import jakarta.persistence.*;
 import org.slf4j.Logger;
@@ -141,6 +142,10 @@ public class Order implements Serializable {
             throw new SameCustomerAndProviderException(SAME_PROVIDER);
 
         }
+    }
+
+    public void addReview(Review review){
+       this.reviews.add(review);
     }
 
     public User getUser(){
