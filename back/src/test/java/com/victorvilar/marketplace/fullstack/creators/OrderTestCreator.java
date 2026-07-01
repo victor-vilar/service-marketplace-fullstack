@@ -11,6 +11,7 @@ import com.victorvilar.marketplace.fullstack.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,12 @@ public abstract class OrderTestCreator {
         order.addReview(ReviewTestCreator.criarReviewDoCustomer());
         order.addReview(ReviewTestCreator.criarReviewDoProvider());
         order.setCustomer(UserTestCreator.criarUserCompleto());
+        return order;
+    }
+
+    public static Order criarOrderSemReview(){
+        Order order = criarUmaOrderCompleta();
+        order.setReviews(new ArrayList<>());
         return order;
     }
 
