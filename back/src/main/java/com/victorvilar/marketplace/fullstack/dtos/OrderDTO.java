@@ -111,8 +111,8 @@ public class OrderDTO {
         this.job = job;
     }
 
-    public static JobDTO.Builder builder(){
-        return new JobDTO.Builder();
+    public static OrderDTO.Builder builder(){
+        return new OrderDTO.Builder();
     }
 
     public static class Builder{
