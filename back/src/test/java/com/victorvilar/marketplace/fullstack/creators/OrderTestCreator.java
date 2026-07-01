@@ -1,5 +1,6 @@
 package com.victorvilar.marketplace.fullstack.creators;
 
+import com.victorvilar.marketplace.fullstack.domain.Job;
 import com.victorvilar.marketplace.fullstack.domain.Order;
 import com.victorvilar.marketplace.fullstack.domain.Payment;
 import com.victorvilar.marketplace.fullstack.dtos.OrderDTO;
@@ -21,25 +22,29 @@ public abstract class OrderTestCreator {
         order.setOrderStatus(OrderStatus.EM_ANDAMENTO);
         order.setTotalAmount(BigDecimal.TEN);
         order.setObservation("Essa é uma observação");
-        Payment payment = gerarPayment();
-        payment.setOrder(order);
+        order.setJob(JobTestCreator.criarJobCompleto());
+        order.setCustomer(UserTestCreator.criarUserCompleto());
+        order.setPayment(gerarPayment());
         order.addReview(ReviewTestCreator.criarReviewDoCustomer());
         order.addReview(ReviewTestCreator.criarReviewDoProvider());
+        order.setCustomer(UserTestCreator.criarUserCompleto());
         return order;
     }
 
-    public static OrderDTO criarUmaOrderDTOCompleta(){
-       PaymentDTO payment = gerarPaymentDTO();
+    public static OrderDTO criarUmaOrderDTOCompleta() {
+        PaymentDTO payment = gerarPaymentDTO();
         OrderDTO order = OrderDTO.builder()
-               .id(UUID.randomUUID().toString())
-               .creationDate(LocalDate.now())
-               .orderStatus(OrderStatus.EM_ANDAMENTO.toString())
-               .totalAmount(BigDecimal.TEN)
-               .observation("Essa é uma observação")
+                .id(UUID.randomUUID().toString())
+                .creationDate(LocalDate.now())
+                .orderStatus(OrderStatus.EM_ANDAMENTO.toString())
+                .totalAmount(BigDecimal.TEN)
+                .observation("Essa é uma observação")
+                .customer(UserTestCreator.criarUserCompleto().getId().toString())
+                .job(JobTestCreator.criarJobCompleto().getId().toString())
                 .payment(payment)
                 .build();
-            order.setReviews(List.of(ReviewTestCreator.criarReviewDoCustomer(),ReviewTestCreator.criarReviewDoProvider()));
-            return order;
+        order.setReviews(List.of(ReviewTestCreator.criarReviewDoCustomer(), ReviewTestCreator.criarReviewDoProvider()));
+        return order;
     }
 
     private static Payment gerarPayment(){
